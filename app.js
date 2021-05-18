@@ -2,19 +2,19 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 
+require("./src/config/sql-connection");
+
 app.use(morgan("tiny"));
 app.use(express.json());
 
 const port = 3001;
 
 // LOAD routers
-const authRouter = require("./src/routers/auth.router");
-const jobRouter = require("./src/routers/job.router");
 const userRouter = require("./src/routers/user.router");
+const postRouter = require("./src/routers/post.router");
 // USE routers
-app.use("/v1/auth", authRouter);
+app.use("/v1/post", postRouter);
 app.use("/v1/user", userRouter);
-app.use("/v1/job", jobRouter);
 
 // HANDLE error
 const handleError = require("./src/utils/handleError");

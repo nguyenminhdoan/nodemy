@@ -1,17 +1,13 @@
-const { UserSchema } = require("../model/User");
+const { PostSchema } = require("../model/Post");
 
-exports.getUsers = async ({ userName, password }) => {
-  return await UserSchema.findOne({ userName, password });
+exports.getPosts = async () => {
+  return await PostSchema.find();
 };
 
-exports.getAllUsers = async () => {
-  return await UserSchema.find();
-};
-
-exports.createUser = (body) => {
+exports.createPosts = (body) => {
   return new Promise((resolve, reject) => {
     try {
-      UserSchema(body)
+      PostSchema(body)
         .save()
         .then((data) => resolve(data))
         .catch((error) => reject(error));
@@ -22,12 +18,21 @@ exports.createUser = (body) => {
   });
 };
 
-exports.deleteUser = (_id) => {
+exports.updatePost = ({ _id, content }) => {
   return new Promise((resolve, reject) => {
     try {
-      UserSchema.findOneAndDelete({
-        _id,
-      })
+      PostSchema.findByIdAndUpdate(
+        { _id },
+        {
+          status: "updated post",
+          $set: {
+            content,
+          },
+        },
+        {
+          new: true,
+        }
+      )
         .then((data) => resolve(data))
         .catch((error) => reject(error));
     } catch (error) {

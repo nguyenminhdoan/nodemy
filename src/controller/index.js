@@ -1,7 +1,7 @@
+const PostController = require("./post");
 const UserController = require("./user");
-const JobController = require("./job");
 
 module.exports = {
+  PostController,
   UserController,
-  JobController,
 };

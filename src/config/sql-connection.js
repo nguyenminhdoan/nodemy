@@ -1,9 +1,16 @@
-const Sequelize = require("sequelize");
+const mongoose = require("mongoose");
 
-const sequelize = new Sequelize("sql_nodemy", "root", "01684485815tv", {
-  dialect: "mysql",
-  host: "localhost",
+mongoose.connect("mongodb://localhost:27017/mongo_nodemy", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
 });
 
-sequelize.sync();
-module.exports = sequelize;
+const mgD = mongoose.connection;
+mgD.on("open", () => {
+  console.log("mongoDB is connected successfully");
+});
+mgD.on("error", (error) => {
+  console.log(error);
+});
